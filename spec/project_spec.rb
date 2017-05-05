@@ -52,9 +52,9 @@ describe(Project) do
     it("returns an array of volunteers for that project") do
       test_project = Project.new({:name => "Cleanup", :id => nil})
       test_project.save()
-      test_volunteer = Volunteer.new({:name => "Learn SQL", :project_id => test_project.id()})
+      test_volunteer = Volunteer.new({:name => "bob", :project_id => test_project.id()})
       test_volunteer.save()
-      test_volunteer2 = Volunteer.new({:name => "Review Ruby", :project_id => test_project.id()})
+      test_volunteer2 = Volunteer.new({:name => "sky", :project_id => test_project.id()})
       test_volunteer2.save()
       expect(test_project.volunteers()).to(eq([test_volunteer, test_volunteer2]))
     end
@@ -64,8 +64,8 @@ describe(Project) do
     it('lets you update projects in the database') do
       project = Project.new({:name => "Cleanup", :id => nil})
       project.save()
-      project.update({:name => "Homework Stuff"})
-      expect(project.name()).to(eq("Homework Stuff"))
+      project.update({:name => "Recycling"})
+      expect(project.name()).to(eq("Recycling"))
     end
   end
   describe("#delete") do
@@ -80,9 +80,9 @@ describe(Project) do
     it("deletes a project's volunteers from the database") do
       project = Project.new({:name => "Cleanup", :id => nil})
       project.save()
-      volunteer = Volunteer.new({:name => "learn SQL", :project_id => project.id()})
+      volunteer = Volunteer.new({:name => "bob", :project_id => project.id()})
       volunteer.save()
-      volunteer2 = Volunteer.new({:name => "Review Ruby", :project_id => project.id()})
+      volunteer2 = Volunteer.new({:name => "sky", :project_id => project.id()})
       volunteer2.save()
       project.delete()
       expect(Volunteer.all()).to(eq([]))
