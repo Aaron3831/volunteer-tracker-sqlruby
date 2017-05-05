@@ -9,7 +9,7 @@ describe(Volunteer) do
 
   describe("#save") do
     it("adds a volunteer to the array of saved volunteers") do
-      test_volunteer = Volunteer.new({:name => "bob", :list_id => 1})
+      test_volunteer = Volunteer.new({:name => "bob", :project_id => 1})
       test_volunteer.save()
       expect(Volunteer.all()).to(eq([test_volunteer]))
     end
@@ -17,22 +17,22 @@ describe(Volunteer) do
 
   describe("#name") do
     it("lets you read the name out") do
-      test_volunteer = Volunteer.new({:name => "bob", :list_id => 1})
+      test_volunteer = Volunteer.new({:name => "bob", :project_id => 1})
       expect(test_volunteer.name()).to(eq("bob"))
     end
   end
 
-  describe("#list_id") do
-    it("lets you read the list ID out") do
-      test_volunteer = Volunteer.new({:name => "bob", :list_id => 1})
-      expect(test_volunteer.list_id()).to(eq(1))
+  describe("#project_id") do
+    it("lets you read the project ID out") do
+      test_volunteer = Volunteer.new({:name => "bob", :project_id => 1})
+      expect(test_volunteer.project_id()).to(eq(1))
     end
   end
 
   describe("#==") do
-    it("is the same volunteer if it has the same name and list ID") do
-      volunteer1 = Volunteer.new({:name => "bob", :list_id => 1})
-      volunteer2 = Volunteer.new({:name => "bob", :list_id => 1})
+    it("is the same volunteer if it has the same name and project ID") do
+      volunteer1 = Volunteer.new({:name => "bob", :project_id => 1})
+      volunteer2 = Volunteer.new({:name => "bob", :project_id => 1})
       expect(volunteer1).to(eq(volunteer2))
     end
   end
