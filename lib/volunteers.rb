@@ -2,7 +2,7 @@ class Volunteer
   attr_reader(:name, :project_id, :id)
 
   define_method(:initialize) do |attributes|
-    @volunteer = attributes.fetch(:volunteer)
+    @name = attributes.fetch(:name)
     @project_id = attributes.fetch(:project_id)
     @id = attributes.fetch(:id)
   end
@@ -14,7 +14,7 @@ class Volunteer
       volunteer = volunteer.fetch("volunteer")
       project_id = volunteer.fetch("project_id").to_i()
       id = volunteer.fetch("id").to_i()
-      volunteers.push(Volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id}))
+      volunteers.push(Volunteer.new({:name => volunteer, :project_id => project_id, :id => id}))
     end
     volunteers
   end
@@ -30,7 +30,7 @@ class Volunteer
 
   define_singleton_method(:volunteers_in_project) do |project_volunteer|
     project = project_volunteer
-    returned_project = DB.exec("SELECT * FROM specialties WHERE volunteer = '#{project}';")
+    returned_project = DB.exec("SELECT * FROM projects WHERE name = '#{project}';")
     project_id = nil
     returned_project.each() do |project|
       project_id = project.fetch("id").to_i()
@@ -41,28 +41,28 @@ class Volunteer
       volunteer = volunteer.fetch("volunteer")
       project_id = volunteer.fetch("project_id").to_i()
       id = volunteer.fetch("id").to_i()
-      volunteers_array.push(Volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id}))
+      volunteers_array.push(Volunteer.new({:name => volunteer, :project_id => project_id, :id => id}))
     end
     volunteers_array
   end
 
-  define_singleton_method(:patients_for_volunteer) do
+  define_singleton_method(:projects_for_volunteer) do
     returned_volunteers = DB.exec("SELECT * FROM volunteers ORDER BY volunteer;")
     volunteers = []
     returned_volunteers.each() do |volunteer|
       volunteer = volunteer.fetch("volunteer")
       project_id = volunteer.fetch("project_id").to_i()
       id = volunteer.fetch("id").to_i()
-      volunteers.push(Volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id}))
+      volunteers.push(Volunteer.new({:name => volunteer, :project_id => project_id, :id => id}))
     end
-    volunteer_patient_array = []
+    volunteer_project_array = []
     returned_volunteers.each() do |volunteer|
       id = volunteer.fetch("id").to_i()
-      patients_amount = DB.exec("SELECT COUNT(name) FROM patients WHERE volunteer_id = #{id};")
-      amount = patients_amount.values().join().to_s()
+      projects_amount = DB.exec("SELECT COUNT(name) FROM projects WHERE volunteer_id = #{id};")
+      amount = projects_amount.values().join().to_s()
       name = volunteer.fetch("name")
-      volunteer_patient_array.push(name + amount)
+      volunteer_project_array.push(name + amount)
     end
-    volunteer_patient_array
+    volunteer_project_array
   end
 end
