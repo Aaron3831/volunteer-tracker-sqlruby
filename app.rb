@@ -41,9 +41,9 @@ post("/volunteers") do
   name = params.fetch("name")
   project_id = params.fetch("project_id").to_i()
   @project = Project.find(project_id)
-  @task = Volunteer.new({:name => name, :project_id => project_id})
-  @task.save()
-  erb(:task_success)
+  @volunteer = Volunteer.new({:name => name, :project_id => project_id})
+  @volunteer.save()
+  erb(:volunteer_success)
 end
 
 get("/projects/:id/edit") do
