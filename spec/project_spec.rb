@@ -1,91 +1,83 @@
 require('spec_helper')
 
 describe(Project) do
-  describe(".all") do
-    it("starts off with no projects") do
+  describe('.all')do
+    it('starts off with no lists')do
       expect(Project.all()).to(eq([]))
     end
   end
 
-  describe("#name") do
-    it("tells you its name") do
-      project = Project.new({:name => "Cleanup", :id => nil})
-      expect(project.name()).to(eq("Cleanup"))
+  describe('#name') do
+    it('tells you the name of the project')do
+      project = Project.new({:name => "Build a building", :id => nil})
+      expect(project.name()).to(eq("Build a building"))
     end
   end
 
-  describe("#id") do
-    it("sets its ID when you save it") do
-      project = Project.new({:name => "Cleanup", :id => nil})
-      project.save()
-      expect(project.id()).to(be_an_instance_of(Fixnum))
-    end
-  end
-
-  describe("#save") do
-    it("lets you save projects to the database") do
-      project = Project.new({:name => "Cleanup", :id => nil})
+  describe('#save') do
+    it('lets you save projects to the database')do
+      project = Project.new({:name => "Build a building", :id => nil})
       project.save()
       expect(Project.all()).to(eq([project]))
     end
   end
 
-  describe("#==") do
-    it("is the same project if it has the same name") do
-      project1 = Project.new({:name => "Cleanup", :id => nil})
-      project2 = Project.new({:name => "Cleanup", :id => nil})
+  describe('#==') do
+    it("is the same project if it has the same name")do
+      project1 = Project.new({:name => "Build a building", :id => nil})
+      project2 = Project.new({:name => "Build a building", :id => nil})
       expect(project1).to(eq(project2))
     end
   end
 
-  describe(".find") do
-    it("returns a project by its ID") do
-      test_project = Project.new({:name => "Cleanup", :id => nil})
+  describe('.find')do
+    it('returns a project by its ID')do
+      test_project = Project.new({:name => "Build a Building", :id => nil})
       test_project.save()
-      test_project2 = Project.new({:name => "Home stuff", :id => nil})
+      test_project2 = Project.new({:name => "Buy a House", :id => nil})
       test_project2.save()
-      expect(Project.find(test_project2.id())).to(eq(test_project2))
+      expect(Project.find(test_project.id())).to(eq(test_project))
     end
   end
 
   describe("#volunteers") do
-    it("returns an array of volunteers for that project") do
-      test_project = Project.new({:name => "Cleanup", :id => nil})
+    it('returns and array of volunteers for that project') do
+      test_project = Project.new({:name => "Build a building", :id => nil})
       test_project.save()
-      test_volunteer = Volunteer.new({:name => "bob", :project_id => test_project.id()})
+      test_volunteer = Volunteer.new({:id => nil, :name => "Jason", :project_id => test_project.id()})
       test_volunteer.save()
-      test_volunteer2 = Volunteer.new({:name => "sky", :project_id => test_project.id()})
+      test_volunteer2 = Volunteer.new({:id => nil, :name => "Bob", :project_id => test_project.id()})
       test_volunteer2.save()
       expect(test_project.volunteers()).to(eq([test_volunteer, test_volunteer2]))
     end
   end
 
-  describe('#update') do
-    it('lets you update projects in the database') do
-      project = Project.new({:name => "Cleanup", :id => nil})
+  describe('#update')do
+    it('lets you update a projects name')do
+      project = Project.new({:name => "build a building", :id => nil})
       project.save()
-      project.update({:name => "Recycling"})
-      expect(project.name()).to(eq("Recycling"))
+      project.update({:name => "buy a house"})
+      expect(project.name()).to(eq("buy a house"))
     end
   end
-  describe("#delete") do
-    it("lets you delete a project from the database") do
-      project = Project.new({:name => "Cleanup", :id => nil})
+
+  describe("#delete")do
+    it('lets you delete a project from the database')do
+      project = Project.new({:name => "build a building", :id => nil})
       project.save()
-      project2 = Project.new({:name => "House stuff", :id => nil})
+      project2 = Project.new({:name => "go to epicodus", :id => nil})
       project2.save()
       project.delete()
       expect(Project.all()).to(eq([project2]))
     end
-    it("deletes a project's volunteers from the database") do
-      project = Project.new({:name => "Cleanup", :id => nil})
+    it('lets you delete a projects volunteer from the database')do
+      project = Project.new({:name =>"build a building", :id => nil})
       project.save()
-      volunteer = Volunteer.new({:name => "bob", :project_id => project.id()})
+      volunteer = Volunteer.new({:id => nil, :name => "bob", :project_id => project.id()})
       volunteer.save()
-      volunteer2 = Volunteer.new({:name => "sky", :project_id => project.id()})
-      volunteer2.save()
       project.delete()
       expect(Volunteer.all()).to(eq([]))
     end
   end
+
 end

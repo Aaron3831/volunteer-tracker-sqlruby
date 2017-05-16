@@ -1,15 +1,15 @@
-<h1>Update <%=@project.name() %> </h1>
+<h1>Update the <%=@projects.description() %> Project </h1>
 
-<form action="/projects/<%= @project.id() %>" method="post">
+<form action="/projects/<%= @projects.id() %>" method="post">
   <input name="_method" type="hidden" value="patch">
-  <label for="name">Rename your project:</label>
-  <input id="name" name="name" type="text">
+
+  <label for="description">Rename Project Description:</label>
+  <input id="description" name="description" type="text">
 
   <button type="submit">Update</button>
 </form>
-
-<form action="/projects/<%= @project.id() %>" method="post">
+<form action="/projects/<%= @projects.id() %>" method="post">
   <input name="_method" type="hidden" value="delete">
 
-  <button type="submit">Delete project</button>
+  <button type="submit">Delete list</button>
 </form>

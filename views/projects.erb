@@ -1,7 +1,7 @@
 <h1>Your Current Projects</h1>
 
 <% if @projects.any?() %>
-  <h3>Here are your projects:</h3>
+  <h3>Here are your Projects:</h3>
 
   <ul>
     <% @projects.each() do |project| %>
@@ -11,6 +11,8 @@
 
 <% else %>
 
-    <p>There are no projects yet!</p>
+    <p>There are no Projects yet!</p>
 
 <% end %>
+
+<a href="/">Home</a>
